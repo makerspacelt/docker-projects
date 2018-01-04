@@ -1,9 +1,11 @@
 web:
   image: nfqlt/nginx110
   ports:
-    - '10.24.1.2:80:80'
+    - '10.24.16.1:80:80'
   volumes:
     - './src:/home/project/src'
+  links:
+    - "node:fastcgi"
   environment:
     NFQ_DOCUMENT_ROOT: /home/project/src/dist
     NFQ_PROJECT_ROOT: /home/project/src
@@ -12,14 +14,14 @@ web:
 dev:
   image: nfqlt/php70-dev
   ports:
-    - '10.24.1.2:22:22'
+    - '10.24.16.1:22:22'
   links:
     - web
   volumes_from:
     - node
   volumes:
     - './src:/home/project/src'
-    - './conf.d/develop_init.sh:/home/project/develop_init.sh'
+    - './conf.d/project_init.sh:/home/project/project_init.sh'
     - '/home/project/.ssh:/home/project/.ssh'
     - '/etc/ssh:/etc/ssh'
     - '/etc/gitconfig:/etc/gitconfig'
