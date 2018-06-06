@@ -1,7 +1,7 @@
 #!/bin/bash
 
 set -e
-#set -x
+set -x
 
 PROJECT_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)/src"
 

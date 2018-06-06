@@ -1,52 +1,61 @@
-web:
-  image: nfqlt/nginx110
-  ports:
-    - '10.24.16.1:80:80'
-  volumes:
-    - './src:/home/project/src'
-  links:
-    - "node:fastcgi"
-  environment:
-    NFQ_DOCUMENT_ROOT: /home/project/src/dist
-    NFQ_PROJECT_ROOT: /home/project/src
+version: '2.1'
+services:
+  web:
+    image: nfqlt/nginx110
+    network_mode: bridge
+    ports:
+      - '10.24.1.1:80:80'
+    volumes:
+      - './src:/home/project/src'
+    links:
+      - 'node:fastcgi'
+    environment:
+      NFQ_DOCUMENT_ROOT: /home/project/src/dist
+      NFQ_PROJECT_ROOT: /home/project/src
 
 
-dev:
-  image: nfqlt/php70-dev
-  ports:
-    - '10.24.16.1:22:22'
-  links:
-    - web
-  volumes_from:
-    - node
-  volumes:
-    - './src:/home/project/src'
-    - './conf.d/project_init.sh:/home/project/project_init.sh'
-    - '/home/project/.ssh:/home/project/.ssh'
-    - '/etc/ssh:/etc/ssh'
-    - '/etc/gitconfig:/etc/gitconfig'
-    - '/etc/environment:/etc/environment-vm:ro'
-    - '/vagrant/bash_custom:/home/project/.bash_custom'
-  environment:
-    NFQ_PROJECT_ROOT: /home/project/src
-    NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/LaserWeb4.git'
-    NFQ_PROJECT_GIT_BRANCH: dev-es6
-    NFQ_INIT_SCRIPT: ../project_init.sh
-    NFQ_REMOTE_TOOL_NODE: >
-      /usr/bin/npm
-      /usr/bin/node
+  dev:
+    image: nfqlt/php70-dev
+    network_mode: bridge
+    ports:
+      - '10.24.1.1:22:22'
+    links:
+      - web
+    volumes_from:
+      - 'service:node:rw'
+    volumes:
+      - './src:/home/project/src'
+      - './conf.d/project_init.sh:/home/project/project_init.sh'
+      - '/home/project/.ssh:/home/project/.ssh'
+      - '/etc/ssh:/etc/ssh'
+      - '/etc/gitconfig:/etc/gitconfig'
+      - '/etc/environment:/etc/environment-vm:ro'
+      - '/vagrant/bash_custom:/home/project/.bash_custom'
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/LaserWeb4.git'
+      NFQ_PROJECT_GIT_BRANCH: dev-es6
+      NFQ_INIT_SCRIPT: ../project_init.sh
+      NFQ_REMOTE_TOOL_NODE: >
+        /usr/bin/npm
+        /usr/bin/node
 
 
-node:
-  image: nfqlt/node6
-  volumes:
-    - './src:/home/project/src'
-    - /tmp
+  node:
+    image: nfqlt/node6
+    network_mode: bridge
+    volumes:
+      - './src:/home/project/src'
+      - /tmp
 
 
-linker:
-  image: nfqlt/linker17ce
-  volumes:
-    - '/run/docker.sock:/run/docker.sock'
+  linker:
+    image: nfqlt/linker17ce
+    network_mode: bridge
+    volumes:
+      - '/run/docker.sock:/run/docker.sock'
 
+
+volumes: {  }
+networks: {  }
 
