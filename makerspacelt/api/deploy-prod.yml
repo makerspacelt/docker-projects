@@ -4,7 +4,7 @@ services:
     image: nfqlt/apache24-fastcgi
     network_mode: bridge
     ports:
-      - '192.168.1.72:80:80'
+      - '80:80'
     links:
       - fastcgi
     volumes:
@@ -30,6 +30,7 @@ services:
     network_mode: bridge
     volumes:
       - './src:/home/project/src'
+      - './ssh:/home/project/.ssh'
       - './conf.d/symfony-env:/home/project/.env:ro'
     environment:
       NFQ_ENABLE_PHP_MODULES: 'curl json mcrypt ctype tokenizer simplexml intl mbstring xml zip dom xmlwriter xmlreader iconv'
