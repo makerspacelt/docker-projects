@@ -1,0 +1,75 @@
+version: '2.1'
+services:
+  web:
+    image: nfqlt/apache24-fastcgi
+    network_mode: bridge
+    ports:
+      - '192.168.1.73:80:80'
+    links:
+      - fastcgi
+    volumes:
+      - './src:/home/project/src'
+    environment:
+      APACHE_DOCUMENTROOT: /home/project/src/web
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_APACHE_MODULES: rewrite
+
+
+  fastcgi:
+    image: nfqlt/php70-fpm
+    network_mode: bridge
+    links:
+      - mysql
+    volumes:
+      - './src:/home/project/src'
+      - '/srv/service-data/pim-uploads:/home/project/uploads'
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_PHP_MODULES: 'json gd mysqlnd mysqli mbstring'
+
+
+  mysql:
+    image: 'mysql:5.5'
+    network_mode: bridge
+    volumes_from:
+      - 'service:mysqlVol:rw'
+
+
+  mysqlVol:
+    image: nfqlt/mysql55-data
+    network_mode: bridge
+    volumes:
+      - '/srv/service-data/pim-db:/var/lib/mysql'
+
+
+  dev:
+    image: nfqlt/php70-dev
+    network_mode: bridge
+    links:
+      - mysql
+    volumes:
+      - './src:/home/project/src'
+      - '/srv/service-data/pim-uploads:/home/project/uploads'
+      - '/home/project/.ssh:/home/project/.ssh'
+      - '/etc/ssh:/etc/ssh'
+      - '/etc/gitconfig:/etc/gitconfig'
+      - '/etc/environment:/etc/environment-vm:ro'
+      - '/vagrant/bash_custom:/home/project/.bash_custom'
+    environment:
+      NFQ_ENABLE_PHP_MODULES: 'json gd mysqlnd mysqli mbstring xdebug'
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/pim.git'
+      NFQ_PROJECT_GIT_BRANCH: master
+      NFQ_INIT_SCRIPT: tools/docker/prod_init.sh
+
+
+  linker:
+    image: nfqlt/linker17ce
+    network_mode: bridge
+    volumes:
+      - '/run/docker.sock:/run/docker.sock'
+
+
+volumes: {  }
+networks: {  }
+
