@@ -4,7 +4,7 @@ services:
     image: nfqlt/apache24-fastcgi
     network_mode: bridge
     ports:
-      - '192.168.1.73:80:80'
+      - '80:80'
     links:
       - fastcgi
     volumes:
