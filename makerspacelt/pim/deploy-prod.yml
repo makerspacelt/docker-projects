@@ -49,12 +49,8 @@ services:
       - mysql
     volumes:
       - './src:/home/project/src'
+      - './ssh:/home/project/.ssh'
       - '/srv/service-data/pim-uploads:/home/project/uploads'
-      - '/home/project/.ssh:/home/project/.ssh'
-      - '/etc/ssh:/etc/ssh'
-      - '/etc/gitconfig:/etc/gitconfig'
-      - '/etc/environment:/etc/environment-vm:ro'
-      - '/vagrant/bash_custom:/home/project/.bash_custom'
     environment:
       NFQ_ENABLE_PHP_MODULES: 'json gd mysqlnd mysqli mbstring xdebug'
       NFQ_PROJECT_ROOT: /home/project/src
