@@ -1,0 +1,87 @@
+version: '2.1'
+services:
+  web:
+    image: nfqlt/apache24-fastcgi
+    network_mode: bridge
+    ports:
+      - '10.24.1.65:80:80'
+    links:
+      - fastcgi
+    volumes:
+      - './src:/home/project/src'
+    environment:
+      APACHE_DOCUMENTROOT: /home/project/src/web
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_APACHE_MODULES: rewrite
+
+
+  fastcgi:
+    image: nfqlt/php70-fpm
+    network_mode: bridge
+    links:
+      - mysql
+    volumes:
+      - './src:/home/project/src'
+      - './conf.d/php.ini:/etc/php/7.0/fpm/conf.d/99-php-custom.ini:ro'
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv xdebug'
+
+
+  mysql:
+    image: 'mysql:5.7'
+    network_mode: bridge
+    ports:
+      - '10.24.1.65:3306:3306'
+    volumes_from:
+      - 'service:mysqlVol:rw'
+
+
+  mysqlVol:
+    image: nfqlt/mysql57-data
+    network_mode: bridge
+    volumes:
+      - /var/lib/mysql
+
+
+  dev:
+    image: nfqlt/php70-dev
+    network_mode: bridge
+    ports:
+      - '10.24.1.65:22:22'
+    links:
+      - mysql
+    volumes:
+      - './conf.d/php.ini:/etc/php/7.0/cli/conf.d/99-php-custom.ini:ro'
+      - './src:/home/project/src'
+      - '/home/project/.ssh:/home/project/.ssh'
+      - '/etc/ssh:/etc/ssh'
+      - '/etc/gitconfig:/etc/gitconfig'
+      - '/etc/environment:/etc/environment-vm:ro'
+      - '/vagrant/bash_custom:/home/project/.bash_custom'
+    environment:
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv xdebug'
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/tools.git'
+      NFQ_PROJECT_GIT_BRANCH: develop
+      NFQ_INIT_SCRIPT: tools/docker/develop_init.sh
+
+
+  mail:
+    image: nfqlt/mailhog
+    network_mode: bridge
+    ports:
+      - '10.24.1.65:1080:80'
+      - '10.24.1.65:25:25'
+
+
+  linker:
+    image: nfqlt/linker17ce
+    network_mode: bridge
+    volumes:
+      - '/run/docker.sock:/run/docker.sock'
+
+
+volumes: {  }
+networks: {  }
+
