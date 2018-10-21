@@ -1,0 +1,32 @@
+version: '2.1'
+services:
+  dev:
+    image: nfqlt/php70-dev
+    network_mode: bridge
+    ports:
+      - '10.24.1.81:22:22'
+    volumes:
+      - './src:/home/project/src'
+      - '/home/project/.ssh:/home/project/.ssh'
+      - '/etc/ssh:/etc/ssh'
+      - '/etc/gitconfig:/etc/gitconfig'
+      - '/etc/environment:/etc/environment-vm:ro'
+    devices:
+      - '/dev/ttyUSB0:/dev/ttyUSB0'
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/esp-tool-relay.git'
+      NFQ_PROJECT_GIT_BRANCH: develop
+      NFQ_INIT_SCRIPT: tools/docker/develop_init.sh
+
+
+  linker:
+    image: nfqlt/linker17ce
+    network_mode: bridge
+    volumes:
+      - '/run/docker.sock:/run/docker.sock'
+
+
+volumes: {  }
+networks: {  }
+
