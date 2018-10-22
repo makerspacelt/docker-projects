@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   dev:
-    image: nfqlt/php70-dev
+    image: dariuskt/esp-upload
     network_mode: bridge
     ports:
       - '10.24.1.81:22:22'
