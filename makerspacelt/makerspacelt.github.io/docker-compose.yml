@@ -27,7 +27,7 @@ services:
     environment:
       NFQ_PROJECT_ROOT: /home/project/src
       NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/makerspacelt.github.io.git'
-      NFQ_PROJECT_GIT_BRANCH: develop
+      NFQ_PROJECT_GIT_BRANCH: master
       NFQ_INIT_SCRIPT: tools/docker/develop_init.sh
       NFQ_REMOTE_TOOL_WEB: >
         /usr/bin/gem
