@@ -1,8 +1,7 @@
-version: '2.1'
+version: '2.4'
 services:
   dev:
     image: dariuskt/esp-upload
-    network_mode: bridge
     ports:
       - '10.24.1.81:22:22'
     volumes:
@@ -22,11 +21,14 @@ services:
 
   linker:
     image: nfqlt/linker17ce
-    network_mode: bridge
     volumes:
       - '/run/docker.sock:/run/docker.sock'
 
 
 volumes: {  }
-networks: {  }
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.24.1.81/28
 
