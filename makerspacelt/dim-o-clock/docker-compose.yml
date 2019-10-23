@@ -1,8 +1,7 @@
-version: '2.1'
+version: '2.4'
 services:
   dev:
     image: dariuskt/esp-platformio
-    network_mode: bridge
     ports:
       - '10.24.1.97:22:22'
     volumes:
@@ -12,6 +11,7 @@ services:
       - '/etc/ssh:/etc/ssh'
       - '/etc/gitconfig:/etc/gitconfig'
       - '/etc/environment:/etc/environment-vm:ro'
+      - '/tmp/.X11-unix:/tmp/.X11-unix'
     devices:
       - '/dev/ttyUSB0:/dev/ttyUSB0'
     environment:
@@ -23,5 +23,9 @@ services:
 
 
 volumes: {  }
-networks: {  }
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.24.1.97/28
 
