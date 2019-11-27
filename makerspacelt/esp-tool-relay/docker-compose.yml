@@ -1,15 +1,17 @@
 version: '2.4'
 services:
   dev:
-    image: dariuskt/esp-upload
+    image: dariuskt/esp-platformio
     ports:
       - '10.24.1.81:22:22'
     volumes:
       - './src:/home/project/src'
       - '/home/project/.ssh:/home/project/.ssh'
+      - '/home/project/.Xauthority:/home/project/.Xauthority'
       - '/etc/ssh:/etc/ssh'
       - '/etc/gitconfig:/etc/gitconfig'
       - '/etc/environment:/etc/environment-vm:ro'
+      - '/tmp/.X11-unix:/tmp/.X11-unix'
     devices:
       - '/dev/ttyUSB0:/dev/ttyUSB0'
     environment:
@@ -17,12 +19,7 @@ services:
       NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/esp-tool-relay.git'
       NFQ_PROJECT_GIT_BRANCH: develop
       NFQ_INIT_SCRIPT: tools/docker/develop_init.sh
-
-
-  linker:
-    image: nfqlt/linker17ce
-    volumes:
-      - '/run/docker.sock:/run/docker.sock'
+      DISPLAY: $DISPLAY
 
 
 volumes: {  }
