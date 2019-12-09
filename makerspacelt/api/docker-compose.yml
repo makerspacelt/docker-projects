@@ -1,8 +1,7 @@
-version: '2.1'
+version: '2.4'
 services:
   web:
     image: nfqlt/apache24-fastcgi
-    network_mode: bridge
     ports:
       - '10.24.1.33:80:80'
     links:
@@ -16,8 +15,7 @@ services:
 
 
   fastcgi:
-    image: nfqlt/php71-fpm
-    network_mode: bridge
+    image: nfqlt/php72-fpm
     volumes:
       - './src:/home/project/src'
     environment:
@@ -26,10 +24,10 @@ services:
 
 
   dev:
-    image: nfqlt/php71-dev
-    network_mode: bridge
+    image: nfqlt/php72-dev
     ports:
       - '10.24.1.33:22:22'
+      - '10.24.1.33:8080:8080'
     volumes:
       - './src:/home/project/src'
       - '/home/project/.ssh:/home/project/.ssh'
@@ -53,5 +51,10 @@ services:
 
 
 volumes: {  }
-networks: {  }
+networks:
+  default:
+    ipam:
+      config:
+        -
+          subnet: 10.24.1.33/28
 
