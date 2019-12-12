@@ -35,7 +35,7 @@ services:
     environment:
       NFQ_ENABLE_PHP_MODULES: 'curl json mcrypt ctype tokenizer simplexml intl mbstring xml zip dom xmlwriter xmlreader iconv'
       NFQ_PROJECT_ROOT: /home/project/src
-      NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/api.git'
+      NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/acs.git'
       NFQ_PROJECT_GIT_BRANCH: master
       NFQ_INIT_SCRIPT: tools/docker/prod_init.sh
 
