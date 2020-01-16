@@ -1,8 +1,7 @@
-version: '2.1'
+version: '2.4'
 services:
   web:
     image: nfqlt/ruby2
-    network_mode: bridge
     ports:
       - '10.24.1.17:80:4000'
     volumes:
@@ -12,7 +11,6 @@ services:
 
   dev:
     image: nfqlt/php70-dev
-    network_mode: bridge
     ports:
       - '10.24.1.17:22:22'
     volumes_from:
@@ -35,12 +33,16 @@ services:
 
 
   linker:
-    image: nfqlt/linker17ce
-    network_mode: bridge
+    image: nfqlt/linker18ce
     volumes:
       - '/run/docker.sock:/run/docker.sock'
 
 
 volumes: {  }
-networks: {  }
+networks:
+  default:
+    ipam:
+      config:
+        -
+          subnet: 10.24.1.17/28
 

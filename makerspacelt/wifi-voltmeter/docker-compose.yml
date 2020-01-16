@@ -1,8 +1,7 @@
-version: '2.1'
+version: '2.4'
 services:
   dev:
     image: dariuskt/esp-platformio
-    network_mode: bridge
     ports:
       - '10.24.1.113:22:22'
     volumes:
@@ -23,5 +22,10 @@ services:
 
 
 volumes: {  }
-networks: {  }
+networks:
+  default:
+    ipam:
+      config:
+        -
+          subnet: 10.24.1.113/28
 

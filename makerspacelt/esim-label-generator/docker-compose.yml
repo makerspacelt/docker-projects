@@ -1,10 +1,9 @@
-version: '2.1'
+version: '2.4'
 services:
   dev:
     image: nfqlt/php70-dev
-    network_mode: bridge
     ports:
-      - '10.24.1.17:22:22'
+      - '10.24.1.49:22:22'
     volumes:
       - './src:/home/project/src'
       - './conf.d/project_init.sh:/home/project/project_init.sh'
@@ -22,12 +21,16 @@ services:
 
 
   linker:
-    image: nfqlt/linker17ce
-    network_mode: bridge
+    image: nfqlt/linker18ce
     volumes:
       - '/run/docker.sock:/run/docker.sock'
 
 
 volumes: {  }
-networks: {  }
+networks:
+  default:
+    ipam:
+      config:
+        -
+          subnet: 10.24.1.49/28
 

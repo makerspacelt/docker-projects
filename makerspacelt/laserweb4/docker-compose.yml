@@ -1,8 +1,7 @@
-version: '2.1'
+version: '2.4'
 services:
   web:
     image: nfqlt/nginx110
-    network_mode: bridge
     ports:
       - '10.24.1.1:80:80'
     volumes:
@@ -16,7 +15,6 @@ services:
 
   dev:
     image: nfqlt/php70-dev
-    network_mode: bridge
     ports:
       - '10.24.1.1:22:22'
     links:
@@ -43,19 +41,22 @@ services:
 
   node:
     image: nfqlt/node6
-    network_mode: bridge
     volumes:
       - './src:/home/project/src'
       - /tmp
 
 
   linker:
-    image: nfqlt/linker17ce
-    network_mode: bridge
+    image: nfqlt/linker18ce
     volumes:
       - '/run/docker.sock:/run/docker.sock'
 
 
 volumes: {  }
-networks: {  }
+networks:
+  default:
+    ipam:
+      config:
+        -
+          subnet: 10.24.1.1/28
 
