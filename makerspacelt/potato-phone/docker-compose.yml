@@ -12,6 +12,8 @@ services:
       - '/etc/gitconfig:/etc/gitconfig'
       - '/etc/environment:/etc/environment-vm:ro'
       - '/tmp/.X11-unix:/tmp/.X11-unix'
+    devices:
+      - '/dev/ttyUSB0:/dev/ttyUSB0'
     environment:
       NFQ_PROJECT_ROOT: /home/project/src
       NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/potato-phone.git'
