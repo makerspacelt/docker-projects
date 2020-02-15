@@ -1,7 +1,7 @@
 version: '2.4'
 services:
   dev:
-    image: nfqlt/php70-dev
+    image: nfqlt/php72-dev
     ports:
       - '10.24.1.49:22:22'
     volumes:
@@ -13,7 +13,7 @@ services:
       - '/etc/environment:/etc/environment-vm:ro'
       - '/vagrant/bash_custom:/home/project/.bash_custom'
     environment:
-      NFQ_ENABLE_PHP_MODULES: "json iconv curl gd"
+      NFQ_ENABLE_PHP_MODULES: "json iconv curl gd fileinfo"
       NFQ_PROJECT_ROOT: /home/project/src
       NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/esim-label-generator.git'
       NFQ_PROJECT_GIT_BRANCH: master
