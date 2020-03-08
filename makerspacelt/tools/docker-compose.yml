@@ -9,7 +9,7 @@ services:
     volumes:
       - './src:/home/project/src'
     environment:
-      APACHE_DOCUMENTROOT: /home/project/src/web
+      APACHE_DOCUMENTROOT: /home/project/src/public
       NFQ_PROJECT_ROOT: /home/project/src
       NFQ_ENABLE_APACHE_MODULES: rewrite
 
