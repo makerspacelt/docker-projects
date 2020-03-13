@@ -46,6 +46,8 @@ services:
       - '10.24.1.65:22:22'
     links:
       - mysql
+    volumes_from:
+      - service:node:rw
     volumes:
       - './conf.d/php.ini:/etc/php/7.2/cli/conf.d/99-php-custom.ini:ro'
       - './src:/home/project/src'
@@ -60,6 +62,10 @@ services:
       NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/tools.git'
       NFQ_PROJECT_GIT_BRANCH: develop
       NFQ_INIT_SCRIPT: tools/docker/develop_init.sh
+      NFQ_REMOTE_TOOL_NODE: >
+        /usr/bin/yarn
+        /usr/bin/node
+        /usr/bin/grunt
 
 
   mail:
@@ -73,6 +79,13 @@ services:
     image: nfqlt/linker18ce
     volumes:
       - '/run/docker.sock:/run/docker.sock'
+
+
+  node:
+    image: nfqlt/node12
+    volumes:
+      - './src:/home/project/src'
+      - /tmp
 
 
 volumes: {  }
