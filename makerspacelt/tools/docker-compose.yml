@@ -46,6 +46,8 @@ services:
       - '10.24.1.65:22:22'
     links:
       - mysql
+    volumes_from:
+      - service:node:rw
     volumes:
       - './conf.d/php.ini:/etc/php/7.2/cli/conf.d/99-php-custom.ini:ro'
       - './src:/home/project/src'
