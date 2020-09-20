@@ -1,0 +1,19 @@
+version: '2.4'
+services:
+  dev:
+    image: dariuskt/openwrt-imagebuilder
+    volumes:
+      - './src:/home/project/src'
+      - '/etc/gitconfig:/etc/gitconfig'
+      - '/etc/environment:/etc/environment-vm:ro'
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+
+
+volumes: {  }
+networks:
+  default:
+    ipam:
+      config:
+        - subnet: 10.24.1.177/28
+
