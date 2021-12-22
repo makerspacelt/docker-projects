@@ -59,6 +59,7 @@ services:
       - '/vagrant/bash_custom:/home/project/.bash_custom'
       - '/home/project/.Xauthority:/home/project/.Xauthority'
       - '/tmp/.X11-unix:/tmp/.X11-unix'
+      - './995-give-user-bash:/etc/rc.d/995-give-user-bash'
     environment:
       DISPLAY: $DISPLAY
       NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd xdebug fileinfo'
