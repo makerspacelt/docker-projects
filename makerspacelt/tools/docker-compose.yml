@@ -43,6 +43,7 @@ services:
 
   dev:
     image: nfqlt/php73-vscode
+    shm_size: 256M
     ports:
       - '10.24.1.65:22:22'
     links:
