@@ -15,7 +15,7 @@ services:
 
 
   fastcgi:
-    image: nfqlt/php73-fpm
+    image: nfqlt/php74-fpm
     links:
       - mysql
     volumes:
@@ -42,7 +42,7 @@ services:
 
 
   dev:
-    image: nfqlt/php73-vscode
+    image: nfqlt/php74-vscode
     shm_size: 256M
     ports:
       - '10.24.1.65:22:22'
