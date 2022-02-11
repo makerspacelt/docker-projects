@@ -1,0 +1,88 @@
+version: '2.4'
+services:
+  web:
+    image: nfqlt/apache2438-fastcgi
+    network_mode: bridge
+    ports:
+      - '192.168.1.102:80:80'
+    links:
+      - fastcgi
+    volumes:
+      - './src:/home/project/src'
+    environment:
+      APACHE_DOCUMENTROOT: /home/project/src/public
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_APACHE_MODULES: rewrite
+
+
+  fastcgi:
+    image: nfqlt/php74-fpm
+    network_mode: bridge
+    links:
+      - mysql
+    volumes:
+      - './src:/home/project/src'
+      - './conf.d/php.ini:/etc/php/7.4/fpm/conf.d/99-php-custom.ini:ro'
+    environment:
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd fileinfo'
+
+
+  mysql:
+    image: 'mysql:5.7'
+    network_mode: bridge
+    volumes_from:
+      - 'service:mysqlVol:rw'
+
+
+  mysqlVol:
+    image: nfqlt/mysql57-data
+    network_mode: bridge
+    volumes:
+      - /var/lib/mysql
+
+
+  dev:
+    image: nfqlt/php74-dev
+    network_mode: bridge
+    links:
+      - mysql
+    volumes_from:
+      - 'service:node:rw'
+    volumes:
+      - './conf.d/php.ini:/etc/php/7.4/cli/conf.d/99-php-custom.ini:ro'
+    environment:
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd fileinfo'
+      NFQ_PROJECT_ROOT: /home/project/src
+      NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/tools.git'
+      NFQ_PROJECT_GIT_BRANCH: develop
+      NFQ_INIT_SCRIPT: tools/docker/develop_init.sh
+      NFQ_REMOTE_TOOL_NODE: >
+        /usr/bin/yarn
+        /usr/bin/node
+        /usr/bin/grunt
+
+
+  mail:
+    image: nfqlt/mailhog
+    network_mode: bridge
+
+
+  linker:
+    image: nfqlt/linker18ce
+    network_mode: bridge
+    volumes:
+      - '/run/docker.sock:/run/docker.sock'
+
+
+  node:
+    image: nfqlt/node12
+    network_mode: bridge
+    volumes:
+      - './src:/home/project/src'
+      - /tmp
+
+
+volumes: { }
+networks: { }
+
