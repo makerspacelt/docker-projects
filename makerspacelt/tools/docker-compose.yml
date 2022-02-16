@@ -1,17 +1,16 @@
 version: '2.4'
 services:
   web:
-    image: nfqlt/apache2438-fastcgi
+    image: nfqlt/nginx118
     ports:
       - '10.24.1.65:80:80'
     links:
       - fastcgi
     volumes:
       - './src:/home/project/src'
+      - './conf.d/nginx.site:/etc/nginx/sites-available/default:ro'
     environment:
-      APACHE_DOCUMENTROOT: /home/project/src/public
       NFQ_PROJECT_ROOT: /home/project/src
-      NFQ_ENABLE_APACHE_MODULES: rewrite
 
 
   fastcgi:
