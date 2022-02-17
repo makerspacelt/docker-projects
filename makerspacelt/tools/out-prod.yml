@@ -24,7 +24,7 @@ services:
       - './conf.d/php.ini:/etc/php/7.4/fpm/conf.d/99-php-custom.ini:ro'
     environment:
       NFQ_PROJECT_ROOT: /home/project/src
-      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd fileinfo'
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd fileinfo'
 
 
   mysql:
@@ -50,7 +50,7 @@ services:
       - './conf.d/env.prod:/home/project/.env.prod:ro'
       - './conf.d/php.ini:/etc/php/7.4/cli/conf.d/99-php-custom.ini:ro'
     environment:
-      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql mcrypt ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd fileinfo'
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd fileinfo'
       NFQ_PROJECT_ROOT: /home/project/src
       NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/tools.git'
       NFQ_PROJECT_GIT_BRANCH: develop
