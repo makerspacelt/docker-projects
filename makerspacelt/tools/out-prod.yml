@@ -8,7 +8,7 @@ services:
       - fastcgi
     volumes:
       - './src:/home/project/src'
-      - '/srv/services_data/tools/upload:/home/project/upload'
+      - '/srv/data/tools/upload:/home/project/upload'
       - './default.site:/etc/nginx/sites-available/default:ro'
     environment:
       NFQ_PROJECT_ROOT: /home/project/src
@@ -20,7 +20,7 @@ services:
       - mysql
     volumes:
       - './src:/home/project/src'
-      - '/srv/services_data/tools/upload:/home/project/upload'
+      - '/srv/data/tools/upload:/home/project/upload'
       - './conf.d/php.ini:/etc/php/7.4/fpm/conf.d/99-php-custom.ini:ro'
     environment:
       NFQ_PROJECT_ROOT: /home/project/src
@@ -30,7 +30,7 @@ services:
   mysql:
     image: 'mysql:5.7'
     volumes:
-      - '/srv/services_data/tools/mysql:/var/lib/mysql:rw'
+      - '/srv/data/tools/mysql:/var/lib/mysql:rw'
     environment:
       MYSQL_ROOT_PASSWORD: 'rootpassword'
       MYSQL_INITDB_SKIP_TZINFO: 'true'
@@ -46,7 +46,7 @@ services:
     volumes_from:
       - 'service:node:rw'
     volumes:
-      - '/srv/services_data/tools/upload:/home/project/upload'
+      - '/srv/data/tools/upload:/home/project/upload'
       - './conf.d/env.prod:/home/project/.env.prod:ro'
       - './conf.d/php.ini:/etc/php/7.4/cli/conf.d/99-php-custom.ini:ro'
     environment:
