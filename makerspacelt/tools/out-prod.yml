@@ -78,6 +78,26 @@ services:
       - /tmp
 
 
+  cron:
+    image: nfqlt/php74-cron
+    volumes_from:
+      - 'service:node:rw'
+    volumes:
+      - '/srv/data/tools/backups:/home/project/backups'
+    environment:
+      NFQ_CRON_D_PATH: /home/project/src/tools/cron.d
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd xdebug fileinfo'
+      NFQ_REMOTE_TOOL_DBTOOLS: >
+        /usr/bin/mysql
+        /usr/bin/mysqldump
+
+
+  dbtools:
+    image: nfqlt/db-tools
+    volumes_from:
+      - 'service:node:rw'
+
+
 volumes: { }
 networks:
   default:
