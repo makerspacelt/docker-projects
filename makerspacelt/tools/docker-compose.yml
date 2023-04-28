@@ -22,7 +22,7 @@ services:
       - './conf.d/php.ini:/etc/php/7.4/fpm/conf.d/99-php-custom.ini:ro'
     environment:
       NFQ_PROJECT_ROOT: /home/project/src
-      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd xdebug fileinfo'
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd xdebug fileinfo exif'
 
 
   mysql:
@@ -60,7 +60,7 @@ services:
       - '/tmp/.X11-unix:/tmp/.X11-unix'
     environment:
       DISPLAY: $DISPLAY
-      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd xdebug fileinfo'
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd xdebug fileinfo exif'
       NFQ_PROJECT_ROOT: /home/project/src
       NFQ_PROJECT_GIT_REPO: 'https://github.com/makerspacelt/tools.git'
       NFQ_PROJECT_GIT_BRANCH: develop
@@ -97,7 +97,7 @@ services:
       - 'service:node:rw'
     environment:
       NFQ_CRON_D_PATH: /home/project/src/tools/cron.d
-      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd xdebug fileinfo'
+      NFQ_ENABLE_PHP_MODULES: 'mysqlnd curl json pdo pdo_mysql ctype tokenizer simplexml intl opcache mbstring xml zip dom xmlwriter xmlreader iconv gd xdebug fileinfo exif'
       NFQ_REMOTE_TOOL_DBTOOLS: >
         /usr/bin/mysql
         /usr/bin/mysqldump
@@ -109,7 +109,7 @@ services:
       - 'service:node:rw'
 
 
-volumes: { }
+volumes: {  }
 networks:
   default:
     ipam:
